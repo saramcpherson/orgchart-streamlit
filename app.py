@@ -5,15 +5,14 @@ from io import StringIO
 import unicodedata
 
 st.set_page_config(page_title="Org Chart Editor", layout="centered")
-st.title("Org Chart Editor with Live Preview")
+st.title("Org Chart Builder")
 
 st.markdown("""
-Paste your CSV below. Format:
+Easily build, edit, and visualize your org chart.
+Paste your org chart data from a CSV and use simple, natural commands to move, add, or remove team members. Instantly generate Mermaid syntax for diagram rendering, and export updated CSV files for reuse or sharing. No coding required—just clear org structure, fast.
+
+CSV Format:         
 Name,Title,ReportsTo
-Alice,CEO,
-Bob,VP of Sales,Alice
-Carol,VP of Operations,Alice
-Dana,Regional Manager East,Bob
 
 
 Then enter natural commands to modify the org chart, like:
@@ -89,12 +88,12 @@ def generate_mermaid(df):
     return "graph TD\n" + "\n".join(labels + links)
 
 # Mermaid chart preview using code block
-st.subheader("📊 Org Chart Preview (Mermaid Syntax)")
+st.subheader("Org Chart Preview (Mermaid Syntax)")
 mermaid_code = generate_mermaid(st.session_state.df)
 st.code(mermaid_code, language="markdown")
 
 # Export CSV
-st.subheader("📝 Updated CSV Output")
+st.subheader("Updated CSV Output")
 csv_out = st.session_state.df.to_csv(index=False)
 st.code(csv_out, language="csv")
 st.download_button("Download CSV", csv_out, file_name="updated_org_chart.csv", mime="text/csv")
